@@ -35,7 +35,7 @@ const api2 = new ChatGPTAPI({
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve('public/index.html')); // Send the index.html file
+  res.sendFile(path.resolve('index.html')); // Send the index.html file
 });
 
 app.post('/chat1', async (req, res) => {
