@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import fetch from 'node-fetch';
 import { ChatGPTAPI } from 'chatgpt';
+import path from 'path';
 global.fetch = fetch;
 
 const app = express();
@@ -34,7 +35,7 @@ const api2 = new ChatGPTAPI({
 });
 
 app.get('/', (req, res) => {
-  res.sendFile('index.html'); // Send the index.html file
+  res.sendFile(path.resolve('public/index.html')); // Send the index.html file
 });
 
 app.post('/chat1', async (req, res) => {
