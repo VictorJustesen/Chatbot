@@ -8,17 +8,18 @@ global.fetch = fetch;
 const app = express();
 const PORT = 3001;
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = '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';
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public')); 
 
 
 let parentMessageId;
 
 
 
-// Initialize ChatGPTAPI
+
 const api = new ChatGPTAPI({
   apiKey: OPENAI_API_KEY,
   debug: true,
@@ -31,13 +32,17 @@ const api2 = new ChatGPTAPI({
   
 });
 
+app.get('/', (req, res) => {
+  res.sendFile('index.html'); // Send the index.html file
+});
+
 app.post('/chat1', async (req, res) => {
  const { prompt, systemMessage } = req.body;
   console.log(systemMessage);
   try {
-    // Send a message using ChatGPTAPI
+  
     if (api) {
-      // Send the message
+      
       const response = await api.sendMessage(prompt, {
         parentMessageId,
         systemMessage,
@@ -58,9 +63,9 @@ app.post('/chat2', async (req, res) => {
   const { prompt, systemMessage } = req.body;
    console.log(systemMessage);
    try {
-     // Send a message using ChatGPTAPI
+ 
      if (api) {
-       // Send the message
+  
        const response = await api.sendMessage(prompt, {
          parentMessageId,
          systemMessage,
