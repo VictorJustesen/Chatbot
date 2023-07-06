@@ -18,6 +18,7 @@ app.use(express.static('public'));
 
 let parentMessageId;
 
+let parentMessageId2;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 
@@ -25,12 +26,16 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const api = new ChatGPTAPI({
   apiKey: OPENAI_API_KEY,
   debug: true,
+  completionParams: {
+    max_tokens: 150,}
   
 });
 
 const api2 = new ChatGPTAPI({
   apiKey: OPENAI_API_KEY,
   debug: true,
+  completionParams: {
+    max_tokens: 150,}
   
 });
 
@@ -66,14 +71,14 @@ app.post('/chat2', async (req, res) => {
    console.log(systemMessage);
    try {
  
-     if (api) {
+     if (api2) {
   
-       const response = await api.sendMessage(prompt, {
-         parentMessageId,
+       const response = await api2.sendMessage(prompt, {
+         parentMessageId2,
          systemMessage,
          //onProgress: (partialResponse) => console.log(partialResponse.text)
        });
-       parentMessageId = response.id;
+       parentMessageId2 = response.id;
        res.send(response.text);
      } else {
        res.status(500).send('ChatGPTAPI not initialized.');
