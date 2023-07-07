@@ -26,16 +26,14 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const api = new ChatGPTAPI({
   apiKey: OPENAI_API_KEY,
   debug: true,
-  completionParams: {
-    max_tokens: 150,}
+  
   
 });
 
 const api2 = new ChatGPTAPI({
   apiKey: OPENAI_API_KEY,
   debug: true,
-  completionParams: {
-    max_tokens: 150,}
+  
   
 });
 
@@ -44,12 +42,12 @@ app.get('/', (req, res) => {
 });
 
 app.post('/chat1', async (req, res) => {
- const { prompt, systemMessage } = req.body;
-  console.log(systemMessage);
+ const { prompt, systemMessage, change } = req.body;
+  
   try {
   
     if (api) {
-      
+      if(change==true){parentMessageId=null}
       const response = await api.sendMessage(prompt, {
         parentMessageId,
         systemMessage,
@@ -67,12 +65,12 @@ app.post('/chat1', async (req, res) => {
 });
 
 app.post('/chat2', async (req, res) => {
-  const { prompt, systemMessage } = req.body;
-   console.log(systemMessage);
+  const { prompt, systemMessage, change } = req.body;
+   console.log(change);
    try {
  
      if (api2) {
-  
+      if(change==true){parentMessageId=null}
        const response = await api2.sendMessage(prompt, {
          parentMessageId2,
          systemMessage,
