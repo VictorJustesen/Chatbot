@@ -42,18 +42,17 @@ app.get('/', (req, res) => {
 });
 
 app.post('/chat1', async (req, res) => {
- const { prompt, systemMessage, change } = req.body;
-  
+ const { prompt, systemMessage } = req.body;
   try {
   
     if (api) {
-      if(change==true){parentMessageId=null}
+      
       const response = await api.sendMessage(prompt, {
-        parentMessageId,
+        
         systemMessage,
         //onProgress: (partialResponse) => console.log(partialResponse.text)
       });
-      parentMessageId = response.id;
+      
       res.send(response.text);
     } else {
       res.status(500).send('ChatGPTAPI not initialized.');
@@ -63,29 +62,6 @@ app.post('/chat1', async (req, res) => {
     res.status(500).send('An error occurred while processing your request.');
   }
 });
-
-app.post('/chat2', async (req, res) => {
-  const { prompt, systemMessage, change } = req.body;
-   console.log(change);
-   try {
- 
-     if (api2) {
-      if(change==true){parentMessageId=null}
-       const response = await api2.sendMessage(prompt, {
-         parentMessageId2,
-         systemMessage,
-         //onProgress: (partialResponse) => console.log(partialResponse.text)
-       });
-       parentMessageId2 = response.id;
-       res.send(response.text);
-     } else {
-       res.status(500).send('ChatGPTAPI not initialized.');
-     }
-   } catch (error) {
-     console.error('Error:', error);
-     res.status(500).send('An error occurred while processing your request.');
-   }
- });
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
